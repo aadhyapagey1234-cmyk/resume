@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aadhya Pagey — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --ink: #1a1410;
+    --rust: #b85c38;
+    --gold: #c9a84c;
+    --muted: #6b5e52;
+    --rule: #d4c9b8;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* ── Layout ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* ── Header ── */
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+    padding-bottom: 28px;
+    border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeDown 0.9s ease forwards 0.1s;
+  }
+
+  .header-left {}
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .header-tagline {
+    margin-top: 14px;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 420px;
+    line-height: 1.5;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .monogram {
+    width: 90px;
+    height: 90px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    color: var(--rust);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .monogram::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 0.5px solid var(--rule);
+  }
+
+  /* ── Section ── */
+  .section {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 50px;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 5px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-content {}
+
+  /* ── About ── */
+  .about-text {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink);
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+  }
+
+  .about-text strong {
+    font-weight: 600;
+    color: var(--rust);
+  }
+
+  /* ── Education ── */
+  .edu-list {
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+  }
+
+  .edu-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .edu-item:last-child { border-bottom: none; }
+
+  .edu-degree {
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .edu-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3px 8px;
+    align-self: start;
+    margin-top: 4px;
+    white-space: nowrap;
+  }
+
+  /* ── Skills ── */
+  .skills-grid {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: default;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .skill-tag:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  /* ── Achievements ── */
+  .achievement-list {
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+  }
+
+  .achievement-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .achievement-item:last-child { border-bottom: none; }
+
+  .achievement-icon {
+    font-size: 1.3rem;
+    line-height: 1.4;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .achievement-title {
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .achievement-desc {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── Qualities ── */
+  .qualities-wrap {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .quality-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .quality-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .quality-name {
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+
+  .quality-desc {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--muted);
+    font-weight: 300;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* ── Projects ── */
+  .project-list {
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+  }
+
+  .project-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .project-item:last-child { border-bottom: none; }
+
+  .project-name {
+    font-size: 1.2rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .project-name a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  .project-name a:hover { color: var(--rust); }
+
+  .project-arrow {
+    font-size: 0.85rem;
+    color: var(--rust);
+    text-decoration: none;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  .project-name a:hover ~ .project-arrow,
+  .project-name:hover .project-arrow {
+    transform: translateX(4px);
+  }
+
+  .project-desc {
+    margin-top: 6px;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── Contact ── */
+  .contact-list {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-size: 1.05rem;
+  }
+
+  .contact-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 60px;
+  }
+
+  .contact-item a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .contact-item a:hover {
+    color: var(--rust);
+    border-color: var(--rust);
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1.5px solid var(--ink);
+    padding-top: 20px;
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .footer-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  /* ── Decorative rule ── */
+  .gold-rule {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 6px 0 18px;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .page { padding: 40px 24px 80px; }
+    header { grid-template-columns: 1fr; gap: 24px; }
+    .header-right { order: -1; }
+    .monogram { width: 70px; height: 70px; font-size: 1.6rem; }
+    .section { grid-template-columns: 1fr; gap: 12px; }
+    .section-label { border-top: none; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <p class="header-label">Curriculum Vitae</p>
+      <h1>Aadhya<br><em>Pagey</em></h1>
+      <div class="gold-rule"></div>
+      <p class="header-tagline">BBA Student · Business Analytics & Digital Entrepreneurship · Web Developer</p>
+    </div>
+    <div class="header-right">
+      <div class="monogram">AP</div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <div class="section" id="s-about">
+    <div class="section-label">About</div>
+    <div class="section-content">
+      <p class="about-text">
+        Currently pursuing dual BBA degrees in <strong>Business Analytics</strong> at MGM Aurangabad and <strong>Digital Business & Entrepreneurship</strong> at IIM Bangalore. Passionate about the intersection of business strategy, data analytics, and web development.
+      </p>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="section" id="s-edu">
+    <div class="section-label">Education</div>
+    <div class="section-content">
+      <div class="edu-list">
+        <div class="edu-item">
+          <div>
+            <div class="edu-degree">BBA in Business Analytics</div>
+            <div class="edu-school">MGM Aurangabad</div>
+          </div>
+          <div class="edu-badge">In Progress</div>
+        </div>
+        <div class="edu-item">
+          <div>
+            <div class="edu-degree">BBA in Digital Business &amp; Entrepreneurship</div>
+            <div class="edu-school">IIM Bangalore — DBE Programme</div>
+          </div>
+          <div class="edu-badge">In Progress</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section" id="s-skills">
+    <div class="section-label">Skills</div>
+    <div class="section-content">
+      <div class="skills-grid">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Microsoft Office</span>
+        <span class="skill-tag">Data Analysis</span>
+        <span class="skill-tag">Business Analytics</span>
+        <span class="skill-tag">Digital Strategy</span>
+        <span class="skill-tag">Entrepreneurship</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements -->
+  <div class="section" id="s-achievements">
+    <div class="section-label">Achievements</div>
+    <div class="section-content">
+      <div class="achievement-list">
+        <div class="achievement-item">
+          <div class="achievement-icon">🏆</div>
+          <div>
+            <div class="achievement-title">Creativity Competitions — Multiple Wins</div>
+            <div class="achievement-desc">Won several inter-collegiate and open competitions in creative disciplines, demonstrating originality and artistic vision across varied formats.</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🎵</div>
+          <div>
+            <div class="achievement-title">Singing — Competition Winner</div>
+            <div class="achievement-desc">Recognised for vocal performance at competitive events, showcasing stage confidence and musical sensibility.</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">💃</div>
+          <div>
+            <div class="achievement-title">Dance — Competition Winner</div>
+            <div class="achievement-desc">Award-winning performer in dance competitions, blending expression with technical discipline across multiple styles.</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🎭</div>
+          <div>
+            <div class="achievement-title">Kathak — Level II Certified Dancer</div>
+            <div class="achievement-desc">Trained to the second level in Kathak, the classical North Indian dance form, demonstrating sustained dedication to rhythm, footwork, and expressive storytelling.</div>
+          </div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🏅</div>
+          <div>
+            <div class="achievement-title">Sports — Inter-School / Inter-College Competitions</div>
+            <div class="achievement-desc">Active participant and achiever in sports competitions, building teamwork, discipline, and a competitive spirit alongside academic pursuits.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Qualities -->
+  <div class="section" id="s-qualities">
+    <div class="section-label">Qualities</div>
+    <div class="section-content">
+      <div class="qualities-wrap">
+        <div class="quality-item">
+          <div class="quality-dot"></div>
+          <div>
+            <div class="quality-name">Active Listener</div>
+            <div class="quality-desc">Gives full attention to understand perspectives before responding — a rare quality in collaborative and client-facing environments.</div>
+          </div>
+        </div>
+        <div class="quality-item">
+          <div class="quality-dot"></div>
+          <div>
+            <div class="quality-name">Critical Thinking</div>
+            <div class="quality-desc">Approaches problems analytically, questioning assumptions and evaluating evidence to arrive at sound, reasoned conclusions.</div>
+          </div>
+        </div>
+        <div class="quality-item">
+          <div class="quality-dot"></div>
+          <div>
+            <div class="quality-name">Open to New Learning & Opportunities</div>
+            <div class="quality-desc">Embraces growth with curiosity — whether it's a new skill, a fresh perspective, or an unexpected challenge — and actively seeks out experiences that expand horizons.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="section" id="s-projects">
+    <div class="section-label">Projects &amp;<br>Volunteering</div>
+    <div class="section-content">
+      <div class="project-list">
+        <div class="project-item">
+          <div class="project-name">
+            <a href="https://aadhyapagey-del.github.io/resume/" target="_blank">Resume Website</a>
+            <span class="project-arrow">→</span>
+          </div>
+          <p class="project-desc">A personal resume site built from scratch — HTML, CSS & JavaScript with scroll-reveal animations.</p>
+        </div>
+        <div class="project-item">
+          <div class="project-name" style="border-bottom:none;">College Fest Organising Committee</div>
+          <p class="project-desc">Volunteered as an organising committee member for college cultural fests — coordinating events, managing logistics, and ensuring smooth on-ground execution.</p>
+        </div>
+        <div class="project-item">
+          <div class="project-name" style="border-bottom:none;">MUN Conference — Organising Committee</div>
+          <p class="project-desc">Served on the organising committee for Model United Nations conferences, contributing to delegate coordination, committee management, and procedural planning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="section" id="s-contact">
+    <div class="section-label">Contact</div>
+    <div class="section-content">
+      <div class="contact-list">
+        <div class="contact-item">
+          <span class="contact-type">Email</span>
+          <a href="mailto:aadhyapagey@gmail.com">aadhyapagey@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-type">Phone</span>
+          <a href="tel:+917666683008">+91 76666 83008</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-name">Aadhya Pagey</span>
+    <span class="footer-year">© 2026 · All rights reserved</span>
+  </footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
